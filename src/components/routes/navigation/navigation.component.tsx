@@ -20,7 +20,7 @@ export const Navigation = () => {
                     <Link className={'nav-link'} to={'/shop'}>
                         SHOP
                     </Link>
-                    <Link className={'nav-link'} to={'/sign-in-form'}>
+                    <Link className={'nav-link'} to={'/sign-in'}>
                         SIGN IN
                     </Link>
                 </div>
