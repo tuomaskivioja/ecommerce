@@ -1,10 +1,11 @@
 import React from 'react';
 
-import Home from "./components/routes/home/home.component"
+import Home from "./routes/home/home.component"
 import './categories.styles.scss'
 import {Routes, Route } from 'react-router-dom'
-import {Navigation} from "./components/routes/navigation/navigation.component";
-import {AuthenticationPage} from "./components/routes/authentication/authentication.component";
+import {Navigation} from "./routes/navigation/navigation.component";
+import {AuthenticationPage} from "./routes/authentication/authentication.component";
+import {Shop} from './routes/shop/shop.component'
 
 export type CategoryType = {
     id: number,
@@ -16,11 +17,6 @@ export enum ButtonType {
     GOOGLE = 'google-sign-in',
     INVERTED = 'inverted',
     DEFAULT = ''
-}
-
-
-const Shop = () => {
-    return <h1>This is shop</h1>
 }
 
 const App = () => {

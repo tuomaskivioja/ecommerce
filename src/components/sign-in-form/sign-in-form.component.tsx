@@ -1,14 +1,15 @@
 import {FormInput} from "../form-input/form-input.component";
 import {Button} from "../Button/button.component";
 import {ButtonType} from "../../App";
-import {BaseSyntheticEvent, useState} from "react";
+import {BaseSyntheticEvent, useContext, useState} from "react";
 import {
     createUserDocumentFromAuth,
     signInWithGooglePopup,
-    signInAuthUserWithEmailAndPassword, createAuthUserWithEmailAndPassword
+    signInAuthUserWithEmailAndPassword
 } from "../../utils/firebase/firebase.utils";
 
 import './sign-in-form.styles.scss'
+import {UserContext} from "../contexts/user-context.component";
 
 
 const defaultFormFields = {
@@ -19,8 +20,7 @@ const defaultFormFields = {
 export const SignInForm = () => {
 
     const logGoogleUser = async () => {
-        const response = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(response);
+        await signInWithGooglePopup();
     }
 
     const [formFields, setFormFields] = useState(defaultFormFields)
@@ -32,14 +32,18 @@ export const SignInForm = () => {
         setFormFields({...formFields, [name]: value})
     };
 
+    const resetFields = () => {
+        setFormFields(defaultFormFields)
+    }
+
     const logIn = async (event: BaseSyntheticEvent) => {
+        event.preventDefault()
         if (password) {
             try {
-                signInAuthUserWithEmailAndPassword(email, password).then((response) => {
-                    console.log(response)
-                })
+                await signInAuthUserWithEmailAndPassword(email, password);
+            }
 
-            } catch(err) {
+             catch(err) {
                 alert(err)
             }
 
@@ -48,6 +52,7 @@ export const SignInForm = () => {
             alert("no password you fool!!!");
             return
         }
+        resetFields();
     }
 
     return (
@@ -57,8 +62,8 @@ export const SignInForm = () => {
                 <FormInput required={true} label={'Email'} type={'email'} name={'email'} value={email} handleChange={handleChange}/>
                 <FormInput required={true} label={'Password'} type={'password'} name={'password'} value={password} handleChange={handleChange}/>
                 <div className={'buttons-container'}>
-                    <Button type={"submit"} children={'Sign in'} buttonType={ButtonType.INVERTED}></Button>
-                    <Button onClick={logGoogleUser} children={'Google login'} buttonType={ButtonType.GOOGLE} />
+                    <Button type={"submit"} buttonText={'Sign in'} buttonType={ButtonType.INVERTED}></Button>
+                    <Button onClick={logGoogleUser} buttonText={'Google login'} buttonType={ButtonType.GOOGLE} />
                 </div>
 
             </form>

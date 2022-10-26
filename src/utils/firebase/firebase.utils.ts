@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
+import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from 'firebase/auth';
 import {getFirestore, doc, setDoc, getDoc} from 'firebase/firestore'
 import firebase from "firebase/compat";
+import {User} from '@firebase/auth-types';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -27,26 +28,26 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth: UserCredential, additionalInformation?: {displayName: string}) => {
-    if (userAuth.user != null) {
-        const userDocRef = doc(db, 'users', userAuth.user!.uid)
+export const createUserDocumentFromAuth = async (userAuth: any, additionalInformation?: { displayName: string }) => {
+    if (userAuth != null) {
+        const userDocRef = doc(db, 'users', userAuth!.uid)
 
         const userSnapshot = await getDoc(userDocRef);
         if (!userSnapshot.exists()) {
             const createdAt = new Date();
             try {
                 let dname = null
-                if (userAuth.user.displayName == null) {
+                if (userAuth.displayName == null) {
                     if (additionalInformation) {
                         dname = additionalInformation.displayName
                     }
                 }
                 else {
-                    dname = userAuth.user.displayName
+                    dname = userAuth.displayName
                 }
                 await setDoc(userDocRef,
                     {
-                        name: dname, email: userAuth.user.email, created: createdAt,
+                        name: dname, email: userAuth.email, created: createdAt,
                     })
             } catch (error) {
                 if (error instanceof Error) {
@@ -69,5 +70,13 @@ export const createAuthUserWithEmailAndPassword = async (email: string, password
 
 export const signInAuthUserWithEmailAndPassword = async (email: string, password: string) => {
     if (!email || !password) return;
+    console.log('this ran')
     return await signInWithEmailAndPassword(auth, email, password)
+}
+
+export const signOutUser = async () => signOut(auth)
+
+export const onAuthStateChangeListener = async (callback: (user: any) => any) => {
+    const response = await onAuthStateChanged(auth, callback);
+    return response
 }
