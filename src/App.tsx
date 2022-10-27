@@ -6,6 +6,7 @@ import {Routes, Route } from 'react-router-dom'
 import {Navigation} from "./routes/navigation/navigation.component";
 import {AuthenticationPage} from "./routes/authentication/authentication.component";
 import {Shop} from './routes/shop/shop.component'
+import {CheckOut} from "./routes/checkout/checkout.component";
 
 export type CategoryType = {
     id: number,
@@ -27,6 +28,7 @@ const App = () => {
               <Route index={true} element={<Home />}/>
               <Route path='shop' element={<Shop/>}/>
               <Route path='sign-in' element={<AuthenticationPage/>}/>
+              <Route path='checkout' element={<CheckOut/>}/>
           </Route>
       </Routes>
   );
