@@ -1,5 +1,5 @@
 
-import {CategoryType} from "/Users/tuomaskivioja/Desktop/Programming/Courses/ZTM/React/ecommerce/src/App";
+import {CategoryType} from "../../App";
 import {CategoryItemComponent} from "../category-item/category-item.component";
 import React from "react";
 import './directory.styles.scss';
