@@ -1,4 +1,4 @@
-import {CartType} from "../contexts/cart.context";
+import {CartType} from "../../contexts/cart.context";
 import './cart-item.styles.scss'
 
 interface CartItemProps {

@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, type Dispatch} from 'react';
 import { auth,
     // onAuthStateChangedListener,
     createUserDocumentFromAuth, onAuthStateChangeListener,
-} from '../../utils/firebase/firebase.utils';
+} from '../utils/firebase/firebase.utils';
 import firebase from "firebase/compat";
 import {onAuthStateChanged} from "firebase/auth";
 import {User} from '@firebase/auth-types';

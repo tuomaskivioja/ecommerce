@@ -1,17 +1,18 @@
 import {Outlet, Link} from "react-router-dom";
 import {Fragment, useContext} from "react";
 import React from "react";
-import './navigation.styles.scss'
+import './navigation.styles'
 
 import {
 
 ReactComponent as CrownLogo
 } from '../../assets/crown.svg'
-import {UserContext} from "../../components/contexts/user-context.component";
+import {UserContext} from "../../contexts/user-context.component";
 import {signOutUser} from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart.dropdown.component";
-import {CartContext} from "../../components/contexts/cart.context";
+import {CartContext} from "../../contexts/cart.context";
+import {LogoContainer, NavigationContainer, NavLinks, NavLink} from "./navigation.styles";
 
 
 export const Navigation = () => {
@@ -22,26 +23,26 @@ export const Navigation = () => {
 
     return (
         <Fragment>
-            <div className={'navigation'}>
-                <Link className={'logo-container'} to={'/'}>
+            <NavigationContainer>
+                <LogoContainer to={'/'}>
                     <CrownLogo className={'logo'} />
-                </Link>
-                <div className={'nav-links-container'}>
-                    <Link className={'nav-link'} to={'/shop'}>
+                </LogoContainer>
+                <NavLinks >
+                    <NavLink to={'/shop'}>
                         SHOP
-                    </Link>
+                    </NavLink>
                     { currentUser ? (
-                        <span className={'nav-link'} onClick={signOutUser}>SIGN OUT</span>
+                        <span onClick={signOutUser}>SIGN OUT</span>
                     ) : (
-                        <Link className={'nav-link'} to={'/sign-in'}>
+                        <NavLink className={'nav-link'} to={'/sign-in'}>
                             SIGN IN
-                        </Link>
+                        </NavLink>
                     )}
                     <CartIcon />
 
-                </div>
+                </NavLinks>
                 {isOpen && <CartDropdown />}
-            </div>
+            </NavigationContainer>
             <Outlet />
         </Fragment>
     )

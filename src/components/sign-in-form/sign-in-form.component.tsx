@@ -9,7 +9,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import './sign-in-form.styles.scss'
-import {UserContext} from "../contexts/user-context.component";
+import {UserContext} from "../../contexts/user-context.component";
 
 
 const defaultFormFields = {

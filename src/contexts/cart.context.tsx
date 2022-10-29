@@ -1,5 +1,5 @@
 import {createContext, Dispatch, useState} from "react";
-import {ProductType} from "./products.context";
+import {ProductType} from "../store/categories/category.types";
 
 export type CartType = {
     id: number

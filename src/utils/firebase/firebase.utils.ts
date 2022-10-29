@@ -3,7 +3,8 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, createUse
 import {getFirestore, doc, setDoc, getDoc, collection, writeBatch, query, getDocs} from 'firebase/firestore'
 import firebase from "firebase/compat";
 import {User} from '@firebase/auth-types';
-import {ProductsType, ProductType} from "../../components/contexts/products.context";
+import {ProductsType} from "../../contexts/products.context";
+import {CategoryType, ProductType} from "../../store/categories/category.types";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -42,18 +43,24 @@ export const addCollectionAndDocuments = async (collectionKey: string, objectsTo
     console.log('done');
 };
 
-export const getCategoriesAndDocuments = async () => {
+export const getCategoriesAndDocuments = async (): Promise<CategoryType[]> => {
     const collectionRef = collection(db, 'categories');
     const q = query(collectionRef);
 
     const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce((acc: object, docSnapshot) => {
-        const { title, items } = docSnapshot.data();
-        acc[title.toLowerCase()] = items;
-        return acc;
-    }, {});
+    return querySnapshot.docs.map(
+        (docSnapshot) => docSnapshot.data() as CategoryType
+    );
+};
 
-    return categoryMap;
+export type AdditionalInformation = {
+    displayName?: string;
+};
+
+export type UserData = {
+    createdAt: Date;
+    displayName: string;
+    email: string;
 };
 
 export const createUserDocumentFromAuth = async (userAuth: any, additionalInformation?: { displayName: string }) => {

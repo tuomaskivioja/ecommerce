@@ -1,4 +1,4 @@
-import {CartContext} from "../../components/contexts/cart.context";
+import {CartContext} from "../../contexts/cart.context";
 import {useContext} from "react";
 import {CheckoutItem} from "../../components/checkout-item/checkout-item.component";
 

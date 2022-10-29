@@ -1,9 +1,9 @@
 import './product-card.styles.scss'
 import {Button} from "../Button/button.component";
 import {ButtonType} from "../../App";
-import {ProductType} from "../contexts/products.context";
 import {useContext} from "react";
-import {CartContext} from "../contexts/cart.context";
+import {CartContext} from "../../contexts/cart.context";
+import {ProductType} from "../../store/categories/category.types";
 
 interface ProductCardProps {
     product: ProductType

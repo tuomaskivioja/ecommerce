@@ -4,7 +4,7 @@ import './cart-dropdown.styles.scss';
 import {Button} from "../Button/button.component";
 import {ButtonType} from "../../App";
 import {useContext} from "react";
-import {CartContext} from "../contexts/cart.context";
+import {CartContext} from "../../contexts/cart.context";
 import {CartItem} from "../cart-item/cart-item.component";
 
 const CartDropdown = () => {

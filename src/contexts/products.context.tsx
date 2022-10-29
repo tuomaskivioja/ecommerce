@@ -1,17 +1,18 @@
 import {createContext, useEffect, useState} from "react";
-import {PRODUCTS} from '../../shop-data'
-import {addCollectionAndDocuments, getCategoriesAndDocuments} from "../../utils/firebase/firebase.utils";
+import {PRODUCTS} from '../shop-data'
+import {addCollectionAndDocuments, getCategoriesAndDocuments} from "../utils/firebase/firebase.utils";
+import {CategoryType, ProductType} from "../store/categories/category.types";
 
-export type ProductType = { id: number; name: string; imageUrl: string; price: number; }
+
 
 export type ProductsType = {title: string, items: ProductType[]}[]
 
 interface ProductsContextType {
-    products: ProductType[] | null
+    categoriesMap: CategoryType[] | null
 }
 
 export const ProductsContext = createContext<ProductsContextType>({
-    products: [],
+    categoriesMap: [],
 })
 
 interface ProductsProviderProps {
@@ -20,13 +21,13 @@ interface ProductsProviderProps {
 
 export const ProductsProvider = ({children}: ProductsProviderProps) => {
 
-    const [products, setProducts] = useState<ProductType[]>([])
-    const value = {products};
+    const [categoriesMap, setCategoriesMap] = useState<CategoryType[]>([])
+    const value = {categoriesMap: categoriesMap};
 
     useEffect(() => {
         const getCategoriesMap = async () => {
-         const catMap =  getCategoriesAndDocuments()
-            console.log(catMap);
+         const catMap =  await getCategoriesAndDocuments();
+         setCategoriesMap(catMap)
         }
         getCategoriesMap()
     },[])
